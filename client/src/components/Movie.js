@@ -17,7 +17,9 @@ export default function Movie({ data }) {
       </div>
       <div className="card-bottom">
         <h5 className="h5 text-white">
-          <Link to={`/${id}`}>{original_title}</Link>
+          <Link to={`/${id}`} className="text-white">
+            {original_title}
+          </Link>
         </h5>
         <h6 className="h6 text-white-o">
           <FontAwesomeIcon icon={faPoll} />

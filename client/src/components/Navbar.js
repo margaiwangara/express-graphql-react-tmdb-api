@@ -23,28 +23,28 @@ export default function Navbar() {
         24/7
       </Link>
 
-      <a href="#" className="toggler text-white" onClick={navbarToggle}>
+      <Link to="/" className="toggler text-white" onClick={navbarToggle}>
         <FontAwesomeIcon icon={faBars} size="2x" />
-      </a>
+      </Link>
 
       <ul className="nav-items">
         <li className="nav-item">
-          <Link to="/popular" className="nav-link text-white">
+          <Link to="/movie/popular" className="nav-link text-white">
             Popular
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/" className="nav-link text-white">
+          <Link to="/movie/now-showing" className="nav-link text-white">
             In Theatres
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/" className="nav-link text-white">
+          <Link to="/movie/top-rated" className="nav-link text-white">
             Top Rated
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/" className="nav-link text-white">
+          <Link to="/movie/upcoming" className="nav-link text-white">
             Upcoming
           </Link>
         </li>
