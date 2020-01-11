@@ -74,7 +74,15 @@ const NowPlaying = new GraphQLObjectType({
 });
 
 // Top Rated
-
+const TopRated = new GraphQLObjectType({
+  name: "TopRated",
+  fields: () => ({
+    page: { type: GraphQLInt },
+    results: { type: new GraphQLList(Movie) },
+    total_results: { type: GraphQLInt },
+    total_pages: { type: GraphQLInt }
+  })
+});
 // Upcoming
 
 // Root URL
@@ -130,6 +138,21 @@ const RootQuery = new GraphQLObjectType({
             }&page=${args.page || 1}`
           )
           .then(({ data }) => data);
+      }
+    },
+    top_rated: {
+      type: TopRated,
+      args: {
+        page: { type: GraphQLInt }
+      },
+      resolve(parent, args) {
+        return axios
+          .get(
+            `${URL}/top_rated?api_key=${
+              process.env.TMDB_API_KEY
+            }&page=${args.page || 1}`
+          )
+          .then(response => response.data);
       }
     }
   }
