@@ -1,8 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
-function navbarToggle() {
+function navbarToggle(e) {
+  e.preventDefault();
   // get nav-items
   const dropdown = document.querySelector(".nav-items");
 
@@ -17,9 +19,9 @@ function navbarToggle() {
 export default function Navbar() {
   return (
     <nav className="navbar">
-      <a href="#" className="navbar-brand text-white">
+      <Link to="/" className="navbar-brand text-white">
         24/7
-      </a>
+      </Link>
 
       <a href="#" className="toggler text-white" onClick={navbarToggle}>
         <FontAwesomeIcon icon={faBars} size="2x" />
