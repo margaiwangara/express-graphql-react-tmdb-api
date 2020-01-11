@@ -53,6 +53,12 @@ const Popular = new GraphQLObjectType({
   })
 });
 // Latest
+const Latest = new GraphQLObjectType({
+  name: "Latest",
+  fields: () => ({
+    movie: { type: Movie }
+  })
+});
 
 // Now Playing
 
@@ -89,6 +95,14 @@ const RootQuery = new GraphQLObjectType({
               process.env.TMDB_API_KEY
             }&page=${args.page || 1}`
           )
+          .then(response => response.data);
+      }
+    },
+    latest: {
+      type: Movie,
+      resolve(parent, args) {
+        return axios
+          .get(`${URL}/latest?api_key=${process.env.TMDB_API_KEY}`)
           .then(response => response.data);
       }
     }
