@@ -42,6 +42,15 @@ const Genre = new GraphQLObjectType({
   })
 });
 
+// Dates
+const Dates = new GraphQLObjectType({
+  name: "Dates",
+  fields: () => ({
+    maximum: { type: GraphQLString },
+    minimum: { type: GraphQLString }
+  })
+});
+
 // Popular
 const Popular = new GraphQLObjectType({
   name: "Popular",
@@ -58,15 +67,7 @@ const NowPlaying = new GraphQLObjectType({
   name: "NowPlaying",
   fields: () => ({
     page: { type: GraphQLInt },
-    dates: {
-      type: new GraphQLObjectType({
-        name: "Dates",
-        fields: () => ({
-          maximum: { type: GraphQLString },
-          minimum: { type: GraphQLString }
-        })
-      })
-    },
+    dates: { type: Dates },
     results: { type: new GraphQLList(Movie) },
     total_results: { type: GraphQLInt },
     total_pages: { type: GraphQLInt }
@@ -83,7 +84,18 @@ const TopRated = new GraphQLObjectType({
     total_pages: { type: GraphQLInt }
   })
 });
+
 // Upcoming
+const Upcoming = new GraphQLObjectType({
+  name: "Upcoming",
+  fields: () => ({
+    page: { type: GraphQLInt },
+    dates: { type: Dates },
+    results: { type: new GraphQLList(Movie) },
+    total_results: { type: GraphQLInt },
+    total_pages: { type: GraphQLInt }
+  })
+});
 
 // Root URL
 let URL = "https://api.themoviedb.org/3/movie";
@@ -153,6 +165,21 @@ const RootQuery = new GraphQLObjectType({
             }&page=${args.page || 1}`
           )
           .then(response => response.data);
+      }
+    },
+    upcoming: {
+      type: Upcoming,
+      args: {
+        page: { type: GraphQLInt }
+      },
+      resolve(parent, args) {
+        return axios
+          .get(
+            `${URL}/upcoming?api_key=${
+              process.env.TMDB_API_KEY
+            }&page=${args.page || 1}`
+          )
+          .then(({ data }) => data);
       }
     }
   }
