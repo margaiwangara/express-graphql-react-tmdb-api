@@ -7,8 +7,7 @@ import "./App.css";
 // components
 import Navbar from "./components/Navbar";
 import Content from "./components/Content";
-import Movies from "./components/Movies";
-import MovieDetails from "./components/MovieDetails";
+import Popular from "./components/Popular";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql"
@@ -20,8 +19,17 @@ const App = () => (
       <div className="wrapper">
         <Navbar />
         <Content>
-          <Route exact path="/" component={Movies} />
-          <Route exact path="/:movie_id" component={MovieDetails} />
+          <Route exact path="/" component={() => <p>Under Construction</p>} />
+          <Route exact path="/popular" component={Popular} />
+          <Route
+            exact
+            path="/:movie_id"
+            component={() => (
+              <p>
+                <a>Second Page</a>
+              </p>
+            )}
+          />
         </Content>
       </div>
     </Router>

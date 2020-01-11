@@ -29,24 +29,24 @@ export default function Navbar() {
 
       <ul className="nav-items">
         <li className="nav-item">
-          <a href="#" className="nav-link text-white">
+          <Link to="/popular" className="nav-link text-white">
             Popular
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
-          <a href="#" className="nav-link text-white">
+          <Link to="/" className="nav-link text-white">
             In Theatres
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
-          <a href="#" className="nav-link text-white">
+          <Link to="/" className="nav-link text-white">
             Top Rated
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
-          <a href="#" className="nav-link text-white">
+          <Link to="/" className="nav-link text-white">
             Upcoming
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
