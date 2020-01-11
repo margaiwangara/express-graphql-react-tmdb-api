@@ -1,6 +1,10 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+
+// components
+import Movie from "./Movie";
+
 const POPULAR_MOVIES = gql`
   {
     popular {
@@ -10,6 +14,7 @@ const POPULAR_MOVIES = gql`
         original_title
         overview
         runtime
+        poster_path
       }
     }
   }
@@ -23,12 +28,8 @@ export default function Movies() {
   if (error) console.log(error);
 
   const movies = data.popular.results.map(movie => (
-    <div key={movie.id}>
-      <h3>{movie.original_title}</h3>
-      <p>{movie.overview}</p>
-      <h5>{movie.runtime}</h5>
-    </div>
+    <Movie key={movie.id} data={movie} />
   ));
 
-  return <div>{movies}</div>;
+  return <div className="inner-row">{movies}</div>;
 }
