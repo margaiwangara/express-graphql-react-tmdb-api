@@ -33,5 +33,9 @@ export default function Movies() {
     <Movie key={movie.id} data={movie} />
   ));
 
-  return <div className="inner-row">{movies}</div>;
+  return (
+    <div className="movies">
+      <div className="inner-row">{movies}</div>;
+    </div>
+  );
 }
