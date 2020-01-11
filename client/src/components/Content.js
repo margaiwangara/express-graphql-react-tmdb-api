@@ -1,5 +1,8 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPoll, faStar } from "@fortawesome/free-solid-svg-icons";
 import poster from "../assets/pic6.jpg";
+
 // components
 import Movies from "./Movies";
 
@@ -32,7 +35,16 @@ export default function Content() {
             </p>
           </div>
         </div>
-        <div className="details-bottom">some more details</div>
+        <div className="details-bottom">
+          <h3 className="h3">Storyline</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Voluptatibus, cumque laborum. Delectus aut iure rerum quam neque!
+            Adipisci, totam temporibus. Beatae deleniti quisquam ipsam
+            doloribus. Ut modi eligendi, impedit vero non possimus atque
+            aspernatur, labore ipsa corrupti eius fugiat tempore?
+          </p>
+        </div>
       </div>
     </div>
   );

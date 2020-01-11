@@ -147,6 +147,15 @@ img {
   flex-direction: column;
   justify-content: center;
   padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.details-bottom p {
+  color: var(--whiteTinted);
+}
+
+.details-bottom .h3 {
+  color: var(--primaryColor);
 }
 /* Global */
 .text-white {
