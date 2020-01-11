@@ -28,7 +28,7 @@ const Movie = new GraphQLObjectType({
     homepage: { type: GraphQLString },
     budget: { type: GraphQLInt },
     imdb_id: { type: GraphQLString },
-    popularity: { type: GraphQLInt },
+    popularity: { type: GraphQLFloat },
     genres: { type: new GraphQLList(Genre) }
   })
 });
@@ -50,6 +50,19 @@ const Dates = new GraphQLObjectType({
     minimum: { type: GraphQLString }
   })
 });
+
+// Query Optimization
+const withoutDates = {
+  page: { type: GraphQLInt },
+  results: { type: new GraphQLList(Movie) },
+  total_results: { type: GraphQLInt },
+  total_pages: { type: GraphQLInt }
+};
+
+const withDates = {
+  ...withoutDates,
+  dates: { type: Dates }
+};
 
 // Popular
 const Popular = new GraphQLObjectType({
@@ -111,7 +124,7 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return axios
           .get(`${URL}/${args.movie_id}?api_key=${process.env.TMDB_API_KEY}`)
-          .then(response => response.data);
+          .then(({ data }) => data);
       }
     },
     popular: {
