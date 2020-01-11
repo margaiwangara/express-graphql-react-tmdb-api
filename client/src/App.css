@@ -1,7 +1,89 @@
+:root {
+  --primaryColor: #003049;
+  --primaryTinted: rgba(0, 48, 73, 0.75);
+  --accentColor: #d62828;
+  --whiteColor: #eae2b7;
+  --whiteTinted: rgba(234, 226, 183, 0.5);
+}
 body {
   max-width: 100%;
   max-height: 100vh;
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
+  background-color: var(--primaryTinted);
+}
+
+/* Init */
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Wrapper */
+.wrapper {
+  width: 100%;
+  overflow: hidden;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar-brand {
+  grid-area: navbar-brand;
+  font-size: 2rem;
+}
+
+.toggler {
+  grid-area: navbar-toggler;
+  justify-self: end;
+}
+
+.nav-items {
+  grid-area: navbar-items;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "navbar-brand navbar-toggler"
+    "navbar-items navbar-items";
+  grid-template-rows: auto;
+  min-height: 10vh;
+  background-color: var(--primaryColor);
+  border-bottom: solid 2px var(--accentColor);
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.navbar > * {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.85rem 0;
+  font-size: 1.25rem;
+}
+/* Global */
+.text-white {
+  color: var(--whiteColor);
+}
+
+.text-white-o {
+  color: var(--whiteTinted);
+}
+
+.text-grey {
+  color: grey;
 }

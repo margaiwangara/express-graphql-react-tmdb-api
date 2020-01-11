@@ -1,10 +1,11 @@
 import React from "react";
-import ApolloClient, { gql } from "apollo-boost";
+import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import "./App.css";
 
 // components
-import Movies from "./components/Movies";
+// import Movies from "./components/Movies";
+import Navbar from "./components/Navbar";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql"
@@ -12,7 +13,9 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <Movies />
+    <div className="wrapper">
+      <Navbar />
+    </div>
   </ApolloProvider>
 );
 
