@@ -1,7 +1,7 @@
 import { gql } from "apollo-boost";
 
-export const MOVIE_DETAILS = gql`
-  query MovieDetails($movie_id: Int!) {
+export const MOVIE_DETAILS_QUERY = gql`
+  query MovieDetailsQuery($movie_id: Int!) {
     movie(movie_id: $movie_id) {
       original_title
       overview
@@ -13,7 +13,10 @@ export const MOVIE_DETAILS = gql`
       vote_average
       homepage
       popularity
-      genres
+      genres {
+        id
+        name
+      }
       imdb_id
     }
   }
