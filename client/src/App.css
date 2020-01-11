@@ -50,6 +50,15 @@ ul {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  background-color: var(--primaryColor);
+  border-bottom: solid 2px var(--accentColor);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.25s ease-in-out;
+}
+
+.nav-items.active {
+  transform: scaleY(1);
 }
 
 .navbar {
@@ -59,7 +68,7 @@ ul {
     "navbar-brand navbar-toggler"
     "navbar-items navbar-items";
   grid-template-rows: auto;
-  min-height: 10vh;
+  height: 10vh;
   background-color: var(--primaryColor);
   border-bottom: solid 2px var(--accentColor);
   box-sizing: border-box;
@@ -74,6 +83,12 @@ ul {
   display: block;
   padding: 0.85rem 0;
   font-size: 1.25rem;
+}
+
+/* Content */
+.content {
+  padding: 1rem;
+  height: 90vh;
 }
 /* Global */
 .text-white {
