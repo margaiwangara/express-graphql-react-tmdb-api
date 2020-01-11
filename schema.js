@@ -1,20 +1,12 @@
+const axios = require("axios");
 const {
   GraphQLObjectType,
   GraphQLInt,
   GraphQLString,
   GraphQLBoolean,
-  GraphQLList
+  GraphQLList,
+  GraphQLSchema
 } = require("graphql");
-
-// Popular
-
-// Latest
-
-// Now Playing
-
-// Top Rated
-
-// Upcoming
 
 // Movie
 const Movie = new GraphQLObjectType({
@@ -47,4 +39,44 @@ const Genre = new GraphQLObjectType({
     id: { type: GraphQLInt },
     name: { type: GraphQLString }
   })
+});
+
+// Popular
+const Popular = new GraphQLObjectType({
+  name: "Popular",
+  fields: () => ({
+    page: { type: GraphQLInt },
+    results: { type: new GraphQLList(Movie) }
+  })
+});
+// Latest
+
+// Now Playing
+
+// Top Rated
+
+// Upcoming
+
+// Root Query
+const RootQuery = new GraphQLObjectType({
+  name: "RootQuery",
+  fields: {
+    movie: {
+      type: Movie,
+      args: {
+        movie_id: { type: GraphQLInt }
+      },
+      resolve(parent, args) {
+        const URL = "https://api.themoviedb.org/3/movie";
+        return axios
+          .get(`${URL}/${args.movie_id}?api_key=${process.env.TMDB_API_KEY}`)
+          .then(response => response.data);
+      }
+    }
+  }
+});
+
+// export graphql schema
+module.exports = new GraphQLSchema({
+  query: RootQuery
 });
