@@ -15,6 +15,8 @@ const POPULAR_MOVIES = gql`
         overview
         runtime
         poster_path
+        vote_count
+        vote_average
       }
     }
   }
