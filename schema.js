@@ -52,15 +52,26 @@ const Popular = new GraphQLObjectType({
     total_pages: { type: GraphQLInt }
   })
 });
-// Latest
-const Latest = new GraphQLObjectType({
-  name: "Latest",
-  fields: () => ({
-    movie: { type: Movie }
-  })
-});
 
 // Now Playing
+const NowPlaying = new GraphQLObjectType({
+  name: "NowPlaying",
+  fields: () => ({
+    page: { type: GraphQLInt },
+    dates: {
+      type: new GraphQLObjectType({
+        name: "Dates",
+        fields: () => ({
+          maximum: { type: GraphQLString },
+          minimum: { type: GraphQLString }
+        })
+      })
+    },
+    results: { type: new GraphQLList(Movie) },
+    total_results: { type: GraphQLInt },
+    total_pages: { type: GraphQLInt }
+  })
+});
 
 // Top Rated
 
@@ -104,6 +115,21 @@ const RootQuery = new GraphQLObjectType({
         return axios
           .get(`${URL}/latest?api_key=${process.env.TMDB_API_KEY}`)
           .then(response => response.data);
+      }
+    },
+    now_playing: {
+      type: NowPlaying,
+      args: {
+        page: { type: GraphQLInt }
+      },
+      resolve(parent, args) {
+        return axios
+          .get(
+            `${URL}/now_playing?api_key=${
+              process.env.TMDB_API_KEY
+            }&page=${args.page || 1}`
+          )
+          .then(({ data }) => data);
       }
     }
   }
