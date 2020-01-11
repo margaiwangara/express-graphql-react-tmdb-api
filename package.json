@@ -4,8 +4,10 @@
   "description": "Using GraphQL and Express to consume TMDB REST API",
   "main": "server.js",
   "scripts": {
-    "server": "node server",
-    "dev": "nodemon server"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
     "GraphQL",
