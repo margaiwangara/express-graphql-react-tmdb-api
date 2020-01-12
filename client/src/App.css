@@ -120,7 +120,6 @@ img {
 
 .details-top {
   max-width: 100%;
-  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -138,7 +137,7 @@ img {
 .details-top figure {
   height: 300px;
   width: 250px;
-  box-shadow: -4px 4px 10px rgba(85, 8, 8, 0.5);
+  box-shadow: -2px 8px 15px rgba(85, 8, 8, 0.75);
   margin-bottom: 1.5rem;
 }
 
@@ -146,7 +145,7 @@ img {
   font-size: 2rem;
   font-weight: 700;
   margin: 0.75rem 0;
-  color: var(--whiteTinted);
+  color: var(--whiteColor);
 }
 
 .details-bottom {
@@ -159,11 +158,12 @@ img {
 }
 
 .details-bottom p {
-  color: var(--whiteTinted);
+  color: var(--whiteColor);
 }
 
 .details-bottom .h3 {
   color: var(--primaryColor);
+  font-weight: 700;
 }
 /* Global */
 .text-white {
