@@ -23,7 +23,7 @@ const App = () => (
       <div className="wrapper">
         <Navbar />
         <Content>
-          <Route exact path="/" component={() => <p>Under Construction</p>} />
+          <Route exact path="/" component={NowShowing} />
           <Route exact path="/movie/popular" component={Popular} />
           <Route exact path="/movie/upcoming" component={Upcoming} />
           <Route exact path="/movie/top-rated" component={TopRated} />
