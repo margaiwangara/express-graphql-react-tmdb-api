@@ -1,10 +1,7 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPoll, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@apollo/react-hooks";
 import Moment from "react-moment";
 
-import poster from "../assets/pic6.jpg";
 import { MOVIE_DETAILS_QUERY } from "../graphql/queries";
 
 function formatGenre(genreList) {
@@ -12,7 +9,7 @@ function formatGenre(genreList) {
 
   for (let i = 0; i < genreList.length; i++) {
     container +=
-      i != genreList.length - 1 ? `${genreList[i].name}, ` : genreList[i].name;
+      i !== genreList.length - 1 ? `${genreList[i].name}, ` : genreList[i].name;
   }
 
   return container;
@@ -24,10 +21,11 @@ function formatRuntime(runTimeInMins) {
   const rtMins = runTimeInMins % 60;
 
   // check if rthrs == 0
-  if (rtHrs == 0) return `${runTimeInMins}mins`;
+  if (rtHrs === 0) return `${runTimeInMins}mins`;
 
   let container = rtHrs > 1 ? `${rtHrs}hrs ` : `${rtHrs}hr `;
-  container += rtMins == 0 ? "" : rtMins > 1 ? `${rtMins}min` : `${rtMins}mins`;
+  container +=
+    rtMins === 0 ? "" : rtMins > 1 ? `${rtMins}min` : `${rtMins}mins`;
   return container;
 }
 
@@ -38,7 +36,7 @@ export default function MovieDetails(props) {
     variables: { movie_id }
   });
 
-  if (loading) return <h3 className="h3">Loading...</h3>;
+  if (loading) return <div className="loading">Loading...</div>;
   if (error) console.log(error);
 
   const {
@@ -56,7 +54,7 @@ export default function MovieDetails(props) {
     <div className="details">
       <div className="details-top">
         <figure>
-          <img src={imagePath} alt="poster-image" />
+          <img src={imagePath} alt="movie-poster" />
         </figure>
         <h3 className="h3">{original_title}</h3>
         <div className="content-group">
@@ -78,7 +76,7 @@ export default function MovieDetails(props) {
         <div className="content-group">
           <h5 className="h5">Homepage</h5>
           <p>
-            <a href="#">{homepage}</a>
+            <a href={`${homepage}`}>{homepage}</a>
           </p>
         </div>
       </div>

@@ -9,7 +9,7 @@ import Movies from "./Movies";
 export default function Upcoming() {
   const { loading, error, data } = useQuery(UPCOMING);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="loading">Loading...</div>;
 
   if (error) console.log(error);
 
