@@ -1,11 +1,11 @@
-import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import Moment from "react-moment";
+import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import Moment from 'react-moment';
 
-import { MOVIE_DETAILS_QUERY } from "../graphql/queries";
+import { MOVIE_DETAILS_QUERY } from '../graphql/queries';
 
 function formatGenre(genreList) {
-  let container = "";
+  let container = '';
 
   for (let i = 0; i < genreList.length; i++) {
     container +=
@@ -25,7 +25,7 @@ function formatRuntime(runTimeInMins) {
 
   let container = rtHrs > 1 ? `${rtHrs}hrs ` : `${rtHrs}hr `;
   container +=
-    rtMins === 0 ? "" : rtMins > 1 ? `${rtMins}min` : `${rtMins}mins`;
+    rtMins === 0 ? '' : rtMins > 1 ? `${rtMins}mins` : `${rtMins}min`;
   return container;
 }
 
@@ -33,7 +33,7 @@ export default function MovieDetails(props) {
   let { movie_id } = props.match.params;
   movie_id = parseInt(movie_id);
   const { loading, error, data } = useQuery(MOVIE_DETAILS_QUERY, {
-    variables: { movie_id }
+    variables: { movie_id },
   });
 
   if (loading) return <div className="loading">Loading...</div>;
@@ -46,7 +46,7 @@ export default function MovieDetails(props) {
     release_date,
     runtime,
     overview,
-    poster_path
+    poster_path,
   } = data.movie;
 
   let imagePath = `https://image.tmdb.org/t/p/w500/${poster_path}`;
@@ -73,12 +73,16 @@ export default function MovieDetails(props) {
           <h5 className="h5">Runtime</h5>
           <p>{formatRuntime(runtime)}</p>
         </div>
-        <div className="content-group">
-          <h5 className="h5">Homepage</h5>
-          <p>
-            <a href={`${homepage}`}>{homepage}</a>
-          </p>
-        </div>
+        {homepage ? (
+          <div className="content-group">
+            <h5 className="h5">Homepage</h5>
+            <p>
+              <a href={`${homepage}`}>{homepage}</a>
+            </p>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       <div className="details-bottom">
         <h3 className="h3">Storyline</h3>
