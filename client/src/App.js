@@ -1,37 +1,33 @@
-import React from "react";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "@apollo/react-hooks";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import "./App.css";
+import React from 'react';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
-// components
-import Navbar from "./components/Navbar";
-import Content from "./components/Content";
-import Popular from "./components/Popular";
-import Upcoming from "./components/Upcoming";
-import TopRated from "./components/TopRated";
-import NowShowing from "./components/NowShowing";
-import MovieDetails from "./components/MovieDetails";
+// icons
+import apple32 from './assets/icon/favicon-32x32.png';
+import apple72 from './assets/icon/apple-touch-icon-72x72.png';
+import apple114 from './assets/icon/apple-touch-icon-114x114.png';
+import apple144 from './assets/icon/apple-touch-icon-144x144.png';
 
 const client = new ApolloClient({
-  uri: "/graphql"
+  uri: '/graphql',
 });
 
 const App = () => (
   <ApolloProvider client={client}>
-    <Router>
-      <div className="wrapper">
-        <Navbar />
-        <Content>
-          <Route exact path="/" component={NowShowing} />
-          <Route exact path="/movie/popular" component={Popular} />
-          <Route exact path="/movie/upcoming" component={Upcoming} />
-          <Route exact path="/movie/top-rated" component={TopRated} />
-          <Route exact path="/movie/now-showing" component={NowShowing} />
-          <Route exact path="/:movie_id" component={MovieDetails} />
-        </Content>
-      </div>
-    </Router>
+    <Helmet>
+      <link rel="apple-touch-icon" href={apple32} />
+      <link rel="apple-touch-icon" sizes="72x72" href={apple72} />
+      <link rel="apple-touch-icon" sizes="114x114" href={apple114} />
+      <link rel="apple-touch-icon" sizes="144x144" href={apple144} />
+      <meta name="description" content="A platform to track and view movies" />
+      <meta
+        name="keywords"
+        content="twentyfourseven, movies,latest, upcoming,new arrivals"
+      />
+      <meta name="author" content="Margai Wangara" />
+    </Helmet>
   </ApolloProvider>
 );
 
