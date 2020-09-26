@@ -2,6 +2,7 @@
 /config/config.env
 
 /.vscode
+/client
 /theme
 
 /*.log
