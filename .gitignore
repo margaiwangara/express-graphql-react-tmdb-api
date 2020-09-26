@@ -1,4 +1,7 @@
-node_modules/
-config/config.env
+/node_modules
+/config/config.env
 
-.vscode/
+/.vscode
+/theme
+
+/*.log
