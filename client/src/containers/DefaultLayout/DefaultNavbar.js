@@ -1,17 +1,18 @@
 import React from 'react';
+import logo from '@/assets/img/logo.svg';
 
 function DefaultNavbar() {
   return (
     <div className="header__content">
-      <a href="index.html" className="header__logo">
-        <img src="img/logo.svg" alt="" />
+      <a href="#index" className="header__logo">
+        <img src={logo} alt="logo" />
       </a>
 
       <ul className="header__nav">
         <li className="header__nav-item">
           <a
             className="dropdown-toggle header__nav-link"
-            href="#"
+            href="#home"
             role="button"
             id="dropdownMenuHome"
             data-toggle="dropdown"
@@ -26,10 +27,10 @@ function DefaultNavbar() {
             aria-labelledby="dropdownMenuHome"
           >
             <li>
-              <a href="index.html">Home slideshow bg</a>
+              <a href="#index">Home slideshow bg</a>
             </li>
             <li>
-              <a href="index2.html">Home static bg</a>
+              <a href="#index">Home static bg</a>
             </li>
           </ul>
         </li>
@@ -37,7 +38,7 @@ function DefaultNavbar() {
         <li className="header__nav-item">
           <a
             className="dropdown-toggle header__nav-link"
-            href="#"
+            href="#catalog"
             role="button"
             id="dropdownMenuCatalog"
             data-toggle="dropdown"
@@ -52,16 +53,16 @@ function DefaultNavbar() {
             aria-labelledby="dropdownMenuCatalog"
           >
             <li>
-              <a href="catalog1.html">Catalog Grid</a>
+              <a href="#catalog">Catalog Grid</a>
             </li>
             <li>
-              <a href="catalog2.html">Catalog List</a>
+              <a href="#catalog">Catalog List</a>
             </li>
             <li>
-              <a href="details1.html">Details Movie</a>
+              <a href="#catalog">Details Movie</a>
             </li>
             <li>
-              <a href="details2.html">Details TV Series</a>
+              <a href="#catalog">Details TV Series</a>
             </li>
           </ul>
         </li>
@@ -81,7 +82,7 @@ function DefaultNavbar() {
         <li className="dropdown header__nav-item">
           <a
             className="dropdown-toggle header__nav-link header__nav-link--more"
-            href="#"
+            href="#ios"
             role="button"
             id="dropdownMenuMore"
             data-toggle="dropdown"
