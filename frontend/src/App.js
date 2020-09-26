@@ -21,7 +21,9 @@ const client = new ApolloClient({
 
 function App() {
   useEffect(() => {
-    // appendScript('/assets/js/jquery-3.3.1.min.js');
+    appendScript('/assets/js/js/core.min.js');
+    appendScript('/assets/js/js/script.js');
+    appendScript('/assets/js/custom.js');
   }, []);
   return (
     <Router>
