@@ -21,6 +21,23 @@ export const MOVIE_DETAILS_QUERY = gql`
     }
   }
 `;
+export const LATEST_MOVIE = gql`
+  query LatestMovie {
+    latest {
+      id
+      original_title
+      overview
+      poster_path
+      vote_count
+      vote_average
+      release_date
+      runtime
+      genres {
+        name
+      }
+    }
+  }
+`;
 export const POPULAR_MOVIES = gql`
   query PopularMovies {
     popular {

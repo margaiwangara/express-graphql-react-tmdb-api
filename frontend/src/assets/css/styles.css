@@ -220,3 +220,37 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+/* home poster box */
+.poster-box::before {
+  height: 100%;
+  width: 100%;
+  left: -50px;
+  bottom: -50px;
+  position: absolute;
+  /* background-color: var(--primaryAlternativeColor); */
+  content: '';
+  z-index: -1;
+  border-radius: 8px;
+  border: solid 2px var(--primaryAlternativeColor);
+}
+
+.poster-box .image-box {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.poster-details::after {
+  height: 80%;
+  width: 10%;
+  right: 10px;
+  top: -70px;
+  position: absolute;
+  background-color: var(--primaryAlternativeColor);
+  content: '';
+  z-index: -1;
+  border-radius: 8px;
+  /* border: solid 2px var(--primaryAlternativeColor); */
+}
