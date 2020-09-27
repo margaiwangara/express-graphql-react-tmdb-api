@@ -6,6 +6,8 @@
   --secondaryColor: #fceff9;
   --whiteColor: #ffffff;
   --primaryAlternativeColorShade: #ecc209;
+  --blackColorShade: #223a44;
+  --primaryAlternativeColorShadeLight: rgba(236, 194, 9, 0.25);
 }
 
 body {
@@ -104,9 +106,104 @@ body {
 }
 
 .app-sidebar-nav-item.active {
-  background-color: #223a44;
+  background-color: var(--blackColorShade);
 }
 
 .app-sidebar-nav-item.active .app-sidebar-nav-link {
   color: var(--primaryAlternativeColor);
+}
+
+/* app-body-content-wrapper */
+.app-body-content-wrapper {
+  padding-left: 15.625rem;
+  padding-top: 3.5rem;
+  color: var(--blackColorShade);
+}
+
+/* Home */
+.movie-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-poster-container {
+  height: 250px;
+  position: relative;
+  cursor: pointer;
+}
+
+.movie-poster-container:hover::after {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  content: '';
+  left: 0;
+  top: 0;
+  background-color: var(--primaryAlternativeColorShadeLight);
+  z-index: 100;
+}
+
+.movie-poster-container img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.movie-rating {
+  padding: 0.2rem 1.5rem;
+  display: inline-block;
+  /* margin: 0 auto; */
+  background-color: var(--primaryAlternativeColor);
+  border-radius: 0.625rem;
+}
+
+.aligned-rating {
+  position: absolute;
+  z-index: 125;
+  left: 30%;
+  top: -15px;
+}
+
+.movie-title {
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.movie-subtitle {
+  color: var(--primaryAlternativeColor);
+}
+
+.load-more-button {
+  background-color: var(--primaryAlternativeColor);
+  color: var(--blackColor);
+  font-weight: 500;
+}
+
+.movie-details-box {
+  width: 350px;
+  background-color: var(--blackColor);
+  position: absolute;
+  right: -355px;
+  top: 100px;
+  z-index: 150;
+  box-shadow: 10px 10px 70px 20px rgba(0, 0, 0, 0.75);
+  line-height: 1.5;
+}
+
+.left-pointer {
+  position: absolute;
+  left: -13px;
+  top: 15px;
+  height: 0;
+  width: 0;
+  display: inline-block;
+  border-right: solid 15px var(--blackColor);
+  border-bottom: solid 15px transparent;
+  border-top: solid 15px transparent;
+}
+
+.movie-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

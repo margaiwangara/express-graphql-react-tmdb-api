@@ -16,22 +16,26 @@ function DefaultLayout() {
         <React.Suspense fallback={Loading()}>
           <DefaultSidebar />
         </React.Suspense>
-        <React.Suspense fallback={Loading()}>
-          <Switch>
-            {routes.map(
-              (route, index) =>
-                route.component && (
-                  <Route
-                    path={route.path}
-                    exact={route.exact}
-                    name={route.name}
-                    key={index}
-                    render={(props) => <route.component {...props} />}
-                  />
-                ),
-            )}
-          </Switch>
-        </React.Suspense>
+        <div className="app-body-content-wrapper">
+          <div className="container">
+            <React.Suspense fallback={Loading()}>
+              <Switch>
+                {routes.map(
+                  (route, index) =>
+                    route.component && (
+                      <Route
+                        path={route.path}
+                        exact={route.exact}
+                        name={route.name}
+                        key={index}
+                        render={(props) => <route.component {...props} />}
+                      />
+                    ),
+                )}
+              </Switch>
+            </React.Suspense>
+          </div>
+        </div>
       </section>
     </>
   );

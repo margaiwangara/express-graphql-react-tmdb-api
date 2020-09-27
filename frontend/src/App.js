@@ -5,14 +5,19 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faSpinner, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSpinner,
+  faArrowRight,
+  faCalendarAlt,
+  faClock,
+} from '@fortawesome/free-solid-svg-icons';
 import Loading from './utils/Loading';
 
 // components
 const MainComponent = React.lazy(() => import('./containers/Main/Main'));
 
 // add fonts to library
-library.add(fab, faSpinner, faArrowRight);
+library.add(fab, faSpinner, faArrowRight, faCalendarAlt, faClock);
 
 const client = new ApolloClient({
   uri: '/graphql',
