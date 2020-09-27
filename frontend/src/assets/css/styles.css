@@ -113,6 +113,15 @@ body {
   color: var(--primaryAlternativeColor);
 }
 
+.app-sidebar-nav-item:hover {
+  background-color: var(--blackColorShade);
+}
+
+.app-sidebar-nav-item:hover .app-sidebar-nav-link {
+  color: var(--primaryAlternativeColor);
+  text-decoration: none;
+}
+
 /* app-body-content-wrapper */
 .app-body-content-wrapper {
   padding-left: 15.625rem;
