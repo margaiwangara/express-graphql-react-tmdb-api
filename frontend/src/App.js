@@ -5,14 +5,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Loading from './utils/Loading';
 
 // components
 const MainComponent = React.lazy(() => import('./containers/Main/Main'));
 
 // add fonts to library
-library.add(fab, faSpinner);
+library.add(fab, faSpinner, faArrowRight);
 
 const client = new ApolloClient({
   uri: '/graphql',
@@ -33,9 +33,11 @@ function App() {
           />
           <meta name="author" content="Margai Wangara" />
         </Helmet>
-        <React.Suspense fallback={Loading()}>
-          <MainComponent />
-        </React.Suspense>
+        <div id="app-wrapper">
+          <React.Suspense fallback={Loading()}>
+            <MainComponent />
+          </React.Suspense>
+        </div>
       </ApolloProvider>
     </Router>
   );

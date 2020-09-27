@@ -1,0 +1,112 @@
+:root {
+  --blackColor: #0f1a20;
+  --primaryColor: #80ffe8;
+  --primaryAlternativeColor: #f9dc5c;
+  --accentColor: #587b7f;
+  --secondaryColor: #fceff9;
+  --whiteColor: #ffffff;
+  --primaryAlternativeColorShade: #ecc209;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+#app-wrapper {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* navbar styling */
+.app-navbar {
+  width: 100%;
+  background-color: var(--primaryAlternativeColor);
+  color: var(--blackColor);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  display: none;
+}
+
+.app-navbar-brand-box {
+  background-color: var(--primaryAlternativeColorShade);
+  padding: 0.85rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-navbar-brand {
+  color: var(--blackColor);
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+/* app-body-wrapper */
+#app-body-wrapper {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+/* sidebar */
+.app-sidebar {
+  padding: 2rem 0;
+  background-color: var(--blackColor);
+  white-space: nowrap;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  transition: all 0.5s ease-in-out linear;
+  width: 15.625rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-sidebar-brand {
+  overflow: hidden;
+  height: 9.375rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.app-sidebar-brand img {
+  height: 100%;
+  width: 100%;
+}
+
+.app-sidebar-nav {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-sidebar-nav-item {
+  display: block;
+  padding: 0.5rem 2rem;
+}
+
+.app-sidebar-nav-link {
+  color: var(--primaryAlternativeColor);
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-sidebar-nav-item.active {
+  background-color: #223a44;
+}
+
+.app-sidebar-nav-item.active .app-sidebar-nav-link {
+  color: var(--primaryAlternativeColor);
+}
