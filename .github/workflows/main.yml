@@ -5,7 +5,7 @@ name: Twenty Four Seven Application With MERN
     branches: develop
 
 jobs:
-  build and deploy:
+  build-and-deploy:
     name: build-and-deploy
     runs-on: ubuntu-latest
     steps:
