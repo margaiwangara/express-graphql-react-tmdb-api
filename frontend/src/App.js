@@ -20,7 +20,10 @@ const MainComponent = React.lazy(() => import('./containers/Main/Main'));
 library.add(fab, faSpinner, faArrowRight, faCalendarAlt, faClock);
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  uri:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:5000/graphql'
+      : 'https://twentyfourseven.margaiwangara.me/graphql',
 });
 
 function App() {

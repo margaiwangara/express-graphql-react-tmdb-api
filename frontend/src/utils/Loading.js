@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function Loading() {
   return (
     <div style={LoaderStyle}>
-      <FontAwesomeIcon icon="spinner" spin color="#ffffff" />
+      <FontAwesomeIcon icon="spinner" spin color="#000000" size="2x" />
     </div>
   );
 }
@@ -15,6 +15,5 @@ const LoaderStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: '#000',
 };
 export default Loading;

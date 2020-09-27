@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 
 export const MOVIE_DETAILS_QUERY = gql`
   query MovieDetailsQuery($movie_id: Int!) {
@@ -44,6 +44,12 @@ export const NOW_PLAYING = gql`
         poster_path
         vote_count
         vote_average
+        overview
+        release_date
+        runtime
+        genres {
+          name
+        }
       }
     }
   }
