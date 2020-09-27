@@ -7,7 +7,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Loading from './utils/Loading';
-import { appendScript } from '@/utils/appendScript';
 
 // components
 const MainComponent = React.lazy(() => import('./containers/Main/Main'));
@@ -20,11 +19,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  useEffect(() => {
-    appendScript('/assets/js/js/core.min.js');
-    appendScript('/assets/js/js/script.js');
-    appendScript('/assets/js/custom.js');
-  }, []);
   return (
     <Router>
       <ApolloProvider client={client}>
@@ -35,7 +29,7 @@ function App() {
           />
           <meta
             name="keywords"
-            content="twentyfourseven, movies,latest, upcoming,new arrivals"
+            content="twentyfourseven, movies, latest, upcoming, new arrivals, 24/7"
           />
           <meta name="author" content="Margai Wangara" />
         </Helmet>
