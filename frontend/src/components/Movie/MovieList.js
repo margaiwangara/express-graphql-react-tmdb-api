@@ -1,11 +1,11 @@
 import React from 'react';
-import { Loading } from '@/utils';
+import Loading from '@/utils/Loading';
 
 const MovieListItem = React.lazy(() => import('./MovieListItem'));
 
 function MovieList({ data }) {
-  const Movies = results
-    ? results.map((value, id) => <MovieList value={value} key={value.id} />)
+  const Movies = data
+    ? data.map((value, id) => <MovieListItem value={value} key={value.id} />)
     : '';
 
   return (

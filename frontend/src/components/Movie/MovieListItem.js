@@ -35,7 +35,10 @@ function MovieListItem({ value }) {
           <h5 className="text-capitalize movie-title mb-1">
             {value.original_title}
           </h5>
-          <h6 className="text-capitalize movie-subtitle small">
+          <h6
+            className="text-capitalize movie-subtitle small"
+            style={{ lineHeight: 1.35 }}
+          >
             {formatGenre(value.genres)}
           </h6>
         </div>

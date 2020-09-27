@@ -13,6 +13,7 @@ function DefaultSidebar() {
       <Link to="/" className="app-sidebar-brand">
         <img src={Logo} alt="app-logo" />
       </Link>
+      <hr />
       <ul className="app-sidebar-nav">
         {routes.map((value, id) => (
           <li

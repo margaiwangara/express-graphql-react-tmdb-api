@@ -27,9 +27,15 @@ export const POPULAR_MOVIES = gql`
       results {
         id
         original_title
+        overview
         poster_path
         vote_count
         vote_average
+        release_date
+        runtime
+        genres {
+          name
+        }
       }
     }
   }
@@ -61,9 +67,15 @@ export const UPCOMING = gql`
       results {
         id
         original_title
+        overview
         poster_path
         vote_count
         vote_average
+        release_date
+        runtime
+        genres {
+          name
+        }
       }
     }
   }
@@ -75,9 +87,15 @@ export const TOP_RATED = gql`
       results {
         id
         original_title
+        overview
         poster_path
         vote_count
         vote_average
+        release_date
+        runtime
+        genres {
+          name
+        }
       }
     }
   }

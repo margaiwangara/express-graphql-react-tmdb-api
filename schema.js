@@ -140,7 +140,28 @@ const RootQuery = new GraphQLObjectType({
               args.page || 1
             }`,
           )
-          .then((response) => response.data);
+          .then(({ data }) => {
+            // attach genres
+
+            const collection = data.results.map((value) => {
+              return axios
+                .get(`${URL}/${value.id}?api_key=${process.env.TMDB_API_KEY}`)
+                .then((res) => {
+                  return res.data;
+                  // console.log('inside map', res);
+                });
+            });
+            if (collection.length > 0) {
+              return {
+                page: data.page,
+                results: collection,
+                total_pages: data.total_pages,
+                total_results: data.total_results,
+              };
+            }
+
+            return data;
+          });
       },
     },
     latest: {
@@ -200,7 +221,28 @@ const RootQuery = new GraphQLObjectType({
               args.page || 1
             }`,
           )
-          .then((response) => response.data);
+          .then(({ data }) => {
+            // attach genres
+
+            const collection = data.results.map((value) => {
+              return axios
+                .get(`${URL}/${value.id}?api_key=${process.env.TMDB_API_KEY}`)
+                .then((res) => {
+                  return res.data;
+                  // console.log('inside map', res);
+                });
+            });
+            if (collection.length > 0) {
+              return {
+                page: data.page,
+                results: collection,
+                total_pages: data.total_pages,
+                total_results: data.total_results,
+              };
+            }
+
+            return data;
+          });
       },
     },
     upcoming: {
@@ -215,7 +257,29 @@ const RootQuery = new GraphQLObjectType({
               args.page || 1
             }`,
           )
-          .then(({ data }) => data);
+          .then(({ data }) => {
+            // attach genres
+
+            const collection = data.results.map((value) => {
+              return axios
+                .get(`${URL}/${value.id}?api_key=${process.env.TMDB_API_KEY}`)
+                .then((res) => {
+                  return res.data;
+                  // console.log('inside map', res);
+                });
+            });
+            if (collection.length > 0) {
+              return {
+                page: data.page,
+                dates: data.dates,
+                results: collection,
+                total_pages: data.total_pages,
+                total_results: data.total_results,
+              };
+            }
+
+            return data;
+          });
       },
     },
   },
