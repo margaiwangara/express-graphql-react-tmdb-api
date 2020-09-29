@@ -10,14 +10,16 @@ import {
   faArrowRight,
   faCalendarAlt,
   faClock,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import Loading from './utils/Loading';
+import { appendScript } from '@/utils/appendScript';
 
 // components
 const MainComponent = React.lazy(() => import('./containers/Main/Main'));
 
 // add fonts to library
-library.add(fab, faSpinner, faArrowRight, faCalendarAlt, faClock);
+library.add(fab, faSpinner, faArrowRight, faCalendarAlt, faClock, faBars);
 
 const client = new ApolloClient({
   uri:

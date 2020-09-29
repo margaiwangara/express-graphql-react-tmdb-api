@@ -8,11 +8,16 @@ const {
   GraphQLSchema,
   GraphQLFloat,
 } = require('graphql');
+const redis = require('./utils/redis');
+const { promisifyRedis, getDataFromRedis } = require('./utils/redis');
+
+const REDIS_EXPIRE = 3600;
 
 // Movie
 const Movie = new GraphQLObjectType({
   name: 'Movie',
   fields: () => ({
+    title: { type: GraphQLString },
     original_title: { type: GraphQLString },
     overview: { type: GraphQLString },
     poster_path: { type: GraphQLString },
@@ -122,10 +127,18 @@ const RootQuery = new GraphQLObjectType({
       args: {
         movie_id: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(`${URL}/${args.movie_id}?api_key=${process.env.TMDB_API_KEY}`)
-          .then(({ data }) => data);
+          .then(({ data }) => {
+            return getDataFromRedis(redis, args.movie_id)
+              .then((response) => {
+                return response;
+              })
+              .catch((error) => {
+                return error;
+              });
+          });
       },
     },
     popular: {
@@ -133,7 +146,7 @@ const RootQuery = new GraphQLObjectType({
       args: {
         page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
             `${URL}/popular?api_key=${process.env.TMDB_API_KEY}&page=${
@@ -141,16 +154,17 @@ const RootQuery = new GraphQLObjectType({
             }`,
           )
           .then(({ data }) => {
-            // attach genres
-
+            // check if data exists in redis, else make request to server, reduces number of requests
             const collection = data.results.map((value) => {
-              return axios
-                .get(`${URL}/${value.id}?api_key=${process.env.TMDB_API_KEY}`)
-                .then((res) => {
-                  return res.data;
-                  // console.log('inside map', res);
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
                 });
             });
+
             if (collection.length > 0) {
               return {
                 page: data.page,
@@ -166,10 +180,18 @@ const RootQuery = new GraphQLObjectType({
     },
     latest: {
       type: Movie,
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(`${URL}/latest?api_key=${process.env.TMDB_API_KEY}`)
-          .then((response) => response.data);
+          .then((response) => {
+            redis.setex(
+              response.data.id,
+              REDIS_EXPIRE,
+              JSON.stringify(response.data),
+            );
+
+            return response.data;
+          });
       },
     },
     now_playing: {
@@ -177,7 +199,7 @@ const RootQuery = new GraphQLObjectType({
       args: {
         page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
             `${URL}/now_playing?api_key=${process.env.TMDB_API_KEY}&page=${
@@ -185,16 +207,16 @@ const RootQuery = new GraphQLObjectType({
             }`,
           )
           .then(({ data }) => {
-            // attach genres
-
             const collection = data.results.map((value) => {
-              return axios
-                .get(`${URL}/${value.id}?api_key=${process.env.TMDB_API_KEY}`)
-                .then((res) => {
-                  return res.data;
-                  // console.log('inside map', res);
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
                 });
             });
+
             if (collection.length > 0) {
               return {
                 page: data.page,
@@ -214,7 +236,7 @@ const RootQuery = new GraphQLObjectType({
       args: {
         page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
             `${URL}/top_rated?api_key=${process.env.TMDB_API_KEY}&page=${
@@ -225,13 +247,15 @@ const RootQuery = new GraphQLObjectType({
             // attach genres
 
             const collection = data.results.map((value) => {
-              return axios
-                .get(`${URL}/${value.id}?api_key=${process.env.TMDB_API_KEY}`)
-                .then((res) => {
-                  return res.data;
-                  // console.log('inside map', res);
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
                 });
             });
+
             if (collection.length > 0) {
               return {
                 page: data.page,
@@ -250,7 +274,7 @@ const RootQuery = new GraphQLObjectType({
       args: {
         page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
             `${URL}/upcoming?api_key=${process.env.TMDB_API_KEY}&page=${
@@ -261,13 +285,15 @@ const RootQuery = new GraphQLObjectType({
             // attach genres
 
             const collection = data.results.map((value) => {
-              return axios
-                .get(`${URL}/${value.id}?api_key=${process.env.TMDB_API_KEY}`)
-                .then((res) => {
-                  return res.data;
-                  // console.log('inside map', res);
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
                 });
             });
+
             if (collection.length > 0) {
               return {
                 page: data.page,
