@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require('axios');
 const {
   GraphQLObjectType,
   GraphQLInt,
@@ -6,13 +6,18 @@ const {
   GraphQLBoolean,
   GraphQLList,
   GraphQLSchema,
-  GraphQLFloat
-} = require("graphql");
+  GraphQLFloat,
+} = require('graphql');
+const redis = require('./utils/redis');
+const { promisifyRedis, getDataFromRedis } = require('./utils/redis');
+
+const REDIS_EXPIRE = 3600;
 
 // Movie
 const Movie = new GraphQLObjectType({
-  name: "Movie",
+  name: 'Movie',
   fields: () => ({
+    title: { type: GraphQLString },
     original_title: { type: GraphQLString },
     overview: { type: GraphQLString },
     poster_path: { type: GraphQLString },
@@ -29,26 +34,27 @@ const Movie = new GraphQLObjectType({
     budget: { type: GraphQLInt },
     imdb_id: { type: GraphQLString },
     popularity: { type: GraphQLFloat },
-    genres: { type: new GraphQLList(Genre) }
-  })
+    genres: { type: new GraphQLList(Genre) },
+    genre_ids: { type: new GraphQLList(GraphQLInt) },
+  }),
 });
 
 // Genre
 const Genre = new GraphQLObjectType({
-  name: "Genre",
+  name: 'Genre',
   fields: () => ({
     id: { type: GraphQLInt },
-    name: { type: GraphQLString }
-  })
+    name: { type: GraphQLString },
+  }),
 });
 
 // Dates
 const Dates = new GraphQLObjectType({
-  name: "Dates",
+  name: 'Dates',
   fields: () => ({
     maximum: { type: GraphQLString },
-    minimum: { type: GraphQLString }
-  })
+    minimum: { type: GraphQLString },
+  }),
 });
 
 // Query Optimization
@@ -56,149 +62,256 @@ const withoutDates = {
   page: { type: GraphQLInt },
   results: { type: new GraphQLList(Movie) },
   total_results: { type: GraphQLInt },
-  total_pages: { type: GraphQLInt }
+  total_pages: { type: GraphQLInt },
 };
 
 const withDates = {
   ...withoutDates,
-  dates: { type: Dates }
+  dates: { type: Dates },
 };
 
 // Popular
 const Popular = new GraphQLObjectType({
-  name: "Popular",
+  name: 'Popular',
   fields: () => ({
     page: { type: GraphQLInt },
     results: { type: new GraphQLList(Movie) },
     total_results: { type: GraphQLInt },
-    total_pages: { type: GraphQLInt }
-  })
+    total_pages: { type: GraphQLInt },
+  }),
 });
 
 // Now Playing
 const NowPlaying = new GraphQLObjectType({
-  name: "NowPlaying",
+  name: 'NowPlaying',
   fields: () => ({
     page: { type: GraphQLInt },
     dates: { type: Dates },
     results: { type: new GraphQLList(Movie) },
     total_results: { type: GraphQLInt },
-    total_pages: { type: GraphQLInt }
-  })
+    total_pages: { type: GraphQLInt },
+  }),
 });
 
 // Top Rated
 const TopRated = new GraphQLObjectType({
-  name: "TopRated",
+  name: 'TopRated',
   fields: () => ({
     page: { type: GraphQLInt },
     results: { type: new GraphQLList(Movie) },
     total_results: { type: GraphQLInt },
-    total_pages: { type: GraphQLInt }
-  })
+    total_pages: { type: GraphQLInt },
+  }),
 });
 
 // Upcoming
 const Upcoming = new GraphQLObjectType({
-  name: "Upcoming",
+  name: 'Upcoming',
   fields: () => ({
     page: { type: GraphQLInt },
     dates: { type: Dates },
     results: { type: new GraphQLList(Movie) },
     total_results: { type: GraphQLInt },
-    total_pages: { type: GraphQLInt }
-  })
+    total_pages: { type: GraphQLInt },
+  }),
 });
 
 // Root URL
-let URL = "https://api.themoviedb.org/3/movie";
+let URL = 'https://api.themoviedb.org/3/movie';
 // Root Query
 const RootQuery = new GraphQLObjectType({
-  name: "RootQuery",
+  name: 'RootQuery',
   fields: {
     movie: {
       type: Movie,
       args: {
-        movie_id: { type: GraphQLInt }
+        movie_id: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(`${URL}/${args.movie_id}?api_key=${process.env.TMDB_API_KEY}`)
-          .then(({ data }) => data);
-      }
+          .then(({ data }) => {
+            return getDataFromRedis(redis, args.movie_id)
+              .then((response) => {
+                return response;
+              })
+              .catch((error) => {
+                return error;
+              });
+          });
+      },
     },
     popular: {
       type: Popular,
       args: {
-        page: { type: GraphQLInt }
+        page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
-            `${URL}/popular?api_key=${
-              process.env.TMDB_API_KEY
-            }&page=${args.page || 1}`
+            `${URL}/popular?api_key=${process.env.TMDB_API_KEY}&page=${
+              args.page || 1
+            }`,
           )
-          .then(response => response.data);
-      }
+          .then(({ data }) => {
+            // check if data exists in redis, else make request to server, reduces number of requests
+            const collection = data.results.map((value) => {
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
+                });
+            });
+
+            if (collection.length > 0) {
+              return {
+                page: data.page,
+                results: collection,
+                total_pages: data.total_pages,
+                total_results: data.total_results,
+              };
+            }
+
+            return data;
+          });
+      },
     },
     latest: {
       type: Movie,
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(`${URL}/latest?api_key=${process.env.TMDB_API_KEY}`)
-          .then(response => response.data);
-      }
+          .then((response) => {
+            redis.setex(
+              response.data.id,
+              REDIS_EXPIRE,
+              JSON.stringify(response.data),
+            );
+
+            return response.data;
+          });
+      },
     },
     now_playing: {
       type: NowPlaying,
       args: {
-        page: { type: GraphQLInt }
+        page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
-            `${URL}/now_playing?api_key=${
-              process.env.TMDB_API_KEY
-            }&page=${args.page || 1}`
+            `${URL}/now_playing?api_key=${process.env.TMDB_API_KEY}&page=${
+              args.page || 1
+            }`,
           )
-          .then(({ data }) => data);
-      }
+          .then(({ data }) => {
+            const collection = data.results.map((value) => {
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
+                });
+            });
+
+            if (collection.length > 0) {
+              return {
+                page: data.page,
+                dates: data.dates,
+                results: collection,
+                total_pages: data.total_pages,
+                total_results: data.total_results,
+              };
+            }
+
+            return data;
+          });
+      },
     },
     top_rated: {
       type: TopRated,
       args: {
-        page: { type: GraphQLInt }
+        page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
-            `${URL}/top_rated?api_key=${
-              process.env.TMDB_API_KEY
-            }&page=${args.page || 1}`
+            `${URL}/top_rated?api_key=${process.env.TMDB_API_KEY}&page=${
+              args.page || 1
+            }`,
           )
-          .then(response => response.data);
-      }
+          .then(({ data }) => {
+            // attach genres
+
+            const collection = data.results.map((value) => {
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
+                });
+            });
+
+            if (collection.length > 0) {
+              return {
+                page: data.page,
+                results: collection,
+                total_pages: data.total_pages,
+                total_results: data.total_results,
+              };
+            }
+
+            return data;
+          });
+      },
     },
     upcoming: {
       type: Upcoming,
       args: {
-        page: { type: GraphQLInt }
+        page: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve(parent, args, { redis }) {
         return axios
           .get(
-            `${URL}/upcoming?api_key=${
-              process.env.TMDB_API_KEY
-            }&page=${args.page || 1}`
+            `${URL}/upcoming?api_key=${process.env.TMDB_API_KEY}&page=${
+              args.page || 1
+            }`,
           )
-          .then(({ data }) => data);
-      }
-    }
-  }
+          .then(({ data }) => {
+            // attach genres
+
+            const collection = data.results.map((value) => {
+              return getDataFromRedis(redis, value.id)
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
+                });
+            });
+
+            if (collection.length > 0) {
+              return {
+                page: data.page,
+                dates: data.dates,
+                results: collection,
+                total_pages: data.total_pages,
+                total_results: data.total_results,
+              };
+            }
+
+            return data;
+          });
+      },
+    },
+  },
 });
 
 // export graphql schema
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
 });

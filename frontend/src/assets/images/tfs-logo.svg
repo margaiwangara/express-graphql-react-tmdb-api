@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560">
+  <g id="Group_2" data-name="Group 2" transform="translate(-730 -125)">
+    <circle id="Ellipse_1" data-name="Ellipse 1" cx="280" cy="280" r="280" transform="translate(730 125)" fill="#0f1a20"/>
+    <g id="director-chair" transform="translate(824 206)">
+      <path id="Path_1" data-name="Path 1" d="M96,44H284v64H96Zm0,0" fill="#f9dc5c"/>
+      <path id="Path_2" data-name="Path 2" d="M96,0H284V32H96Zm0,0" fill="#f9dc5c"/>
+      <path id="Path_3" data-name="Path 3" d="M366,153H325a6,6,0,0,0-6,6v24H284V120H96v63H51V159a6,6,0,0,0-6-6H6a6,6,0,0,0,0,12H39v24a6,6,0,0,0,6,6H87.5l94.059,95-95.82,96.777a6,6,0,1,0,8.527,8.445L190,298.527l95.734,96.7a6,6,0,1,0,8.531-8.445L198.445,290,292.5,195H325a6,6,0,0,0,6-6V165h35a6,6,0,0,0,0-12ZM190,281.473,104.383,195H275.617Zm0,0" fill="#f9dc5c"/>
+    </g>
+    <text id="_24" data-name="24" transform="translate(838 533)" fill="#f9dc5c" font-size="120" font-family="Montserrat-Regular, Montserrat" letter-spacing="-0.121em"><tspan x="0" y="0">24</tspan></text>
+    <text id="_7" data-name="7" transform="translate(1076 533)" fill="#f9dc5c" font-size="120" font-family="Montserrat-Regular, Montserrat" letter-spacing="-0.121em"><tspan x="0" y="0">7</tspan></text>
+  </g>
+</svg>

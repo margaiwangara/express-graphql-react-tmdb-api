@@ -1,0 +1,346 @@
+:root {
+  --blackColor: #0f1a20;
+  --primaryColor: #80ffe8;
+  --primaryAlternativeColor: #f9dc5c;
+  --accentColor: #587b7f;
+  --secondaryColor: #fceff9;
+  --whiteColor: #ffffff;
+  --primaryAlternativeColorShade: #ecc209;
+  --blackColorShade: #223a44;
+  --primaryAlternativeColorShadeLight: rgba(236, 194, 9, 0.25);
+  --sidebarWidth: 15.625rem;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+#app-wrapper {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* navbar styling */
+.app-navbar {
+  width: 100%;
+  background-color: var(--primaryAlternativeColor);
+  color: var(--blackColor);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  display: none;
+}
+
+.app-navbar-brand-box {
+  background-color: var(--primaryAlternativeColorShade);
+  padding: 0.85rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-navbar-brand {
+  color: var(--blackColor);
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+/* app-body-wrapper */
+#app-body-wrapper {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+/* toggler handler */
+#app-body-wrapper.hide-sidebar .app-sidebar {
+  width: 0;
+}
+
+#app-body-wrapper.hide-sidebar .app-body-content-wrapper {
+  padding-left: 0;
+}
+
+#app-body-wrapper.hide-sidebar .app-sidebar-toggler {
+  left: 20px;
+}
+
+.app-body-content-wrapper .container h3 {
+  margin-top: 20px;
+}
+
+/* sidebar */
+.app-sidebar {
+  padding: 2rem 0;
+  background-color: var(--blackColor);
+  white-space: nowrap;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  transition: all 0.5s ease-in-out;
+  width: var(--sidebarWidth);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 400;
+}
+
+.app-sidebar-toggler {
+  color: var(--blackColor);
+  position: fixed;
+  background-color: var(--primaryAlternativeColor);
+  left: 225px;
+  top: 20px;
+  z-index: 500;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.app-sidebar-toggler:focus {
+  outline: none;
+}
+
+.app-sidebar-brand {
+  overflow: hidden;
+  height: 9.375rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.app-sidebar-brand img {
+  height: 100%;
+  width: 100%;
+}
+
+.app-sidebar-nav {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-sidebar-nav-item {
+  display: block;
+  padding: 0.5rem 2rem;
+}
+
+.app-sidebar-nav-link {
+  color: var(--primaryAlternativeColor);
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-sidebar-nav-item.active {
+  background-color: var(--blackColorShade);
+}
+
+.app-sidebar-nav-item.active .app-sidebar-nav-link {
+  color: var(--primaryAlternativeColor);
+}
+
+.app-sidebar-nav-item:hover {
+  background-color: var(--blackColorShade);
+}
+
+.app-sidebar-nav-item:hover .app-sidebar-nav-link {
+  color: var(--primaryAlternativeColor);
+  text-decoration: none;
+}
+
+/* app-body-content-wrapper */
+.app-body-content-wrapper {
+  padding-left: var(--sidebarWidth);
+  padding-top: 3.5rem;
+  color: var(--blackColorShade);
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Home */
+.movie-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-poster-container {
+  height: 250px;
+  position: relative;
+  cursor: pointer;
+}
+
+.movie-poster-container:hover::after {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  content: '';
+  left: 0;
+  top: 0;
+  background-color: var(--primaryAlternativeColorShadeLight);
+  z-index: 100;
+}
+
+.movie-poster-container img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.movie-rating {
+  padding: 0.2rem 1.5rem;
+  display: inline-block;
+  /* margin: 0 auto; */
+  background-color: var(--primaryAlternativeColor);
+  border-radius: 0.625rem;
+}
+
+.aligned-rating {
+  position: absolute;
+  z-index: 125;
+  left: 30%;
+  top: -15px;
+}
+
+.movie-title {
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.movie-subtitle {
+  color: var(--primaryAlternativeColor);
+}
+
+.load-more-button {
+  background-color: var(--primaryAlternativeColor);
+  color: var(--blackColor);
+  font-weight: 500;
+}
+
+.movie-details-box {
+  width: 350px;
+  background-color: var(--blackColor);
+  position: absolute;
+  right: -355px;
+  top: 100px;
+  z-index: 150;
+  box-shadow: 10px 10px 70px 20px rgba(0, 0, 0, 0.75);
+  line-height: 1.5;
+}
+
+.left-pointer {
+  position: absolute;
+  left: -13px;
+  top: 15px;
+  height: 0;
+  width: 0;
+  display: inline-block;
+  border-right: solid 15px var(--blackColor);
+  border-bottom: solid 15px transparent;
+  border-top: solid 15px transparent;
+}
+
+.movie-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* home poster box */
+.poster-box::before {
+  height: 100%;
+  width: 100%;
+  left: -50px;
+  bottom: -50px;
+  position: absolute;
+  /* background-color: var(--primaryAlternativeColor); */
+  content: '';
+  z-index: -1;
+  border-radius: 8px;
+  border: solid 2px var(--primaryAlternativeColor);
+}
+
+.poster-box .image-box {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.poster-details::after {
+  height: 80%;
+  width: 10%;
+  right: 10px;
+  top: -70px;
+  position: absolute;
+  background-color: var(--primaryAlternativeColor);
+  content: '';
+  z-index: -1;
+  border-radius: 8px;
+  /* border: solid 2px var(--primaryAlternativeColor); */
+}
+
+.poster-details {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.poster-details p {
+  text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  /* app sidebar */
+  .app-sidebar {
+    width: 100%;
+  }
+
+  /* app wrapper */
+  .app-body-content-wrapper {
+    padding-left: 0;
+  }
+
+  .app-sidebar-toggler {
+    left: unset;
+    right: 25px;
+  }
+
+  .poster-box::before {
+    display: none;
+  }
+
+  .poster-details::after {
+    display: none;
+  }
+
+  .poster-box {
+    margin-top: 25px;
+  }
+
+  .poster-details {
+    align-items: center;
+  }
+
+  .poster-details h1 {
+    text-align: center;
+  }
+
+  .poster-details p {
+    text-align: center;
+  }
+}

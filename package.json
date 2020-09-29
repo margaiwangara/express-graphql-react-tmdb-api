@@ -4,8 +4,10 @@
   "description": "Using GraphQL and Express to consume TMDB REST API",
   "main": "server.js",
   "scripts": {
-    "server": "node server",
-    "dev": "nodemon server"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
     "GraphQL",
@@ -16,10 +18,14 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.1",
+    "concurrently": "^5.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^14.5.8"
+    "graphql": "^14.5.8",
+    "redis": "^3.0.2",
+    "response-time": "^2.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

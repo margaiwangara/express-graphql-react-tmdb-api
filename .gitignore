@@ -1,2 +1,8 @@
-node_modules/
-config/config.env
+/node_modules
+/config/config.env
+
+/.vscode
+/client
+/theme
+
+/*.log
