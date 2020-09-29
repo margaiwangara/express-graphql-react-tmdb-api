@@ -46,11 +46,17 @@ function DefaultSidebar() {
           className="m-0 p-0 d-flex justify-content-center"
           style={{ height: '100px', width: '100px', overflow: 'hidden' }}
         >
-          <img
-            src={tmdbLogo}
-            alt="The Movie Database Logo"
-            style={{ width: '100%', height: '100%' }}
-          />
+          <a
+            target="_blank"
+            rel="noreferrer noopener"
+            href="https://www.themoviedb.org/"
+          >
+            <img
+              src={tmdbLogo}
+              alt="The Movie Database Logo"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </a>
         </figure>
       </div>
     </aside>
