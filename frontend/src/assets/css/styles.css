@@ -293,6 +293,17 @@ body {
   /* border: solid 2px var(--primaryAlternativeColor); */
 }
 
+.poster-details {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.poster-details p {
+  text-align: right;
+}
+
 @media screen and (max-width: 768px) {
   /* app sidebar */
   .app-sidebar {
@@ -307,5 +318,29 @@ body {
   .app-sidebar-toggler {
     left: unset;
     right: 25px;
+  }
+
+  .poster-box::before {
+    display: none;
+  }
+
+  .poster-details::after {
+    display: none;
+  }
+
+  .poster-box {
+    margin-top: 25px;
+  }
+
+  .poster-details {
+    align-items: center;
+  }
+
+  .poster-details h1 {
+    text-align: center;
+  }
+
+  .poster-details p {
+    text-align: center;
   }
 }
