@@ -1,8 +1,5 @@
 import React from 'react';
-import Loading from '@/utils/Loading';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import Logo from '@/assets/images/tfs-logo.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import routes from '@/routes';
 import tmdbLogo from '@/assets/images/tmdb.svg';
 import logoTransparent from '@/assets/images/tfs-transparent.svg';

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -13,7 +13,6 @@ import {
   faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import Loading from './utils/Loading';
-import { appendScript } from '@/utils/appendScript';
 
 // components
 const MainComponent = React.lazy(() => import('./containers/Main/Main'));

@@ -1,6 +1,5 @@
 import React from 'react';
 import TitleComponent from '@/components/TitleComponent/TitleComponent';
-import After from '@/assets/images/after.jpg';
 import { useQuery } from '@apollo/react-hooks';
 import { LATEST_MOVIE } from '@/graphql/queries';
 import Loading from '@/utils/Loading';
@@ -32,7 +31,7 @@ function Home() {
                     <img
                       src={`${POSTER_PATH}/${latest.poster_path}`}
                       alt="movie-poster"
-                      className="h-100"
+                      className="h-100 w-100"
                     />
                   </div>
                 ) : (

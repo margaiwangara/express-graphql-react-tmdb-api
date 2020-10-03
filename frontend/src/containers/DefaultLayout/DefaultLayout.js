@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const DefaultNavbar = React.lazy(() => import('./DefaultNavbar'));
 const DefaultSidebar = React.lazy(() => import('./DefaultSidebar'));
+const Overlay = React.lazy(() => import('@/components/Overlay/Overlay'));
 
 function DefaultLayout() {
   const [displaySidebar, setDisplaySidebar] = useState(false);
@@ -48,6 +49,7 @@ function DefaultLayout() {
           </button>
         </div>
       </section>
+      <Overlay />
     </>
   );
 }
