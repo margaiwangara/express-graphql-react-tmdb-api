@@ -19,6 +19,7 @@ const Movie = new GraphQLObjectType({
   name: 'Movie',
   fields: () => ({
     title: { type: GraphQLString },
+    adult: { type: GraphQLBoolean },
     original_title: { type: GraphQLString },
     overview: { type: GraphQLString },
     poster_path: { type: GraphQLString },
@@ -180,11 +181,15 @@ const RootQuery = new GraphQLObjectType({
             return promisifyRedis(redis, data.id)
               .then((redisResponse) => {
                 if (redisResponse == null) {
-                  // if nothing is found in redis, store the data
-                  redis.setex(data.id, 3600, JSON.stringify(data));
+                  // check if contains adult content
+                  if (!data.adult) {
+                    // if nothing is found in redis, store the data
+                    redis.setex(data.id, 3600, JSON.stringify(data));
 
-                  // return data from api
-                  return data;
+                    // return data from api
+                    return data;
+                  }
+                  return;
                 } else {
                   // return redis data
                   return JSON.parse(redisResponse);

@@ -5,7 +5,11 @@ const MovieListItem = React.lazy(() => import('./MovieListItem'));
 
 function MovieList({ data }) {
   const Movies = data
-    ? data.map((value, id) => <MovieListItem value={value} key={value.id} />)
+    ? data.map((value, id) => {
+        if (!value.adult) {
+          return <MovieListItem value={value} key={value.id} />;
+        }
+      })
     : '';
 
   return (

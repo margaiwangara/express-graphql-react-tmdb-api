@@ -2,6 +2,7 @@ import { gql } from 'apollo-boost';
 
 export const sharedQuery = `
     original_title
+    adult
     overview
     backdrop_path
     poster_path
