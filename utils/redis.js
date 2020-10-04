@@ -18,7 +18,7 @@ function getDataFromRedis(client, id) {
           // make a request to API and store data in redis
           return axios
             .get(
-              `${process.env.TMDB_URL}/${id}?api_key=${process.env.TMDB_API_KEY}`,
+              `${process.env.TMDB_URL}/${id}?api_key=${process.env.TMDB_API_KEY}&append_to_response=videos,credits`,
             )
             .then((responseFromAPI) => {
               // add data to redis

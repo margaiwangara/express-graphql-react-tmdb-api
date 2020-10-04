@@ -7,6 +7,7 @@ const {
   GraphQLList,
   GraphQLSchema,
   GraphQLFloat,
+  GraphQLInputObjectType,
 } = require('graphql');
 const redis = require('./utils/redis');
 const { promisifyRedis, getDataFromRedis } = require('./utils/redis');
@@ -36,6 +37,22 @@ const Movie = new GraphQLObjectType({
     popularity: { type: GraphQLFloat },
     genres: { type: new GraphQLList(Genre) },
     genre_ids: { type: new GraphQLList(GraphQLInt) },
+    videos: {
+      type: new GraphQLObjectType({
+        name: 'Videos',
+        fields: () => ({
+          results: { type: new GraphQLList(Video) },
+        }),
+      }),
+    },
+    credits: {
+      type: new GraphQLObjectType({
+        name: 'Credits',
+        fields: () => ({
+          cast: { type: new GraphQLList(Cast) },
+        }),
+      }),
+    },
   }),
 });
 
@@ -45,6 +62,33 @@ const Genre = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     name: { type: GraphQLString },
+  }),
+});
+
+// Videos
+const Video = new GraphQLObjectType({
+  name: 'Video',
+  fields: () => ({
+    id: { type: GraphQLString },
+    key: { type: GraphQLString },
+    name: { type: GraphQLString },
+    type: { type: GraphQLString },
+    site: { type: GraphQLString },
+    size: { type: GraphQLInt },
+  }),
+});
+
+// Credits
+const Cast = new GraphQLObjectType({
+  name: 'Cast',
+  fields: () => ({
+    cast_id: { type: GraphQLInt },
+    character: { type: GraphQLString },
+    credit_id: { type: GraphQLString },
+    id: { type: GraphQLInt },
+    name: { type: GraphQLString },
+    order: { type: GraphQLInt },
+    profile_path: { type: GraphQLString },
   }),
 });
 
@@ -129,14 +173,26 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parent, args, { redis }) {
         return axios
-          .get(`${URL}/${args.movie_id}?api_key=${process.env.TMDB_API_KEY}`)
+          .get(
+            `${URL}/${args.movie_id}?api_key=${process.env.TMDB_API_KEY}&append_to_response=videos,credits`,
+          )
           .then(({ data }) => {
-            return getDataFromRedis(redis, args.movie_id)
-              .then((response) => {
-                return response;
+            return promisifyRedis(redis, data.id)
+              .then((redisResponse) => {
+                if (redisResponse == null) {
+                  // if nothing is found in redis, store the data
+                  redis.setex(data.id, 3600, JSON.stringify(data));
+
+                  // return data from api
+                  return data;
+                } else {
+                  // return redis data
+                  return JSON.parse(redisResponse);
+                }
               })
-              .catch((error) => {
-                return error;
+              .catch((redisError) => {
+                console.log(redisError);
+                return redisError;
               });
           });
       },
