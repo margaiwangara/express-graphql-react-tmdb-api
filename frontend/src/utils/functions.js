@@ -1,9 +1,13 @@
 function formatGenre(genreList) {
   let container = '';
 
-  for (let i = 0; i < genreList.length; i++) {
-    container +=
-      i !== genreList.length - 1 ? `${genreList[i].name}, ` : genreList[i].name;
+  if (genreList) {
+    for (let i = 0; i < genreList.length; i++) {
+      container +=
+        i !== genreList.length - 1
+          ? `${genreList[i].name}, `
+          : genreList[i].name;
+    }
   }
 
   return container;
