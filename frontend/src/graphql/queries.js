@@ -1,40 +1,51 @@
 import { gql } from 'apollo-boost';
 
+export const sharedQuery = `
+    original_title
+    overview
+    poster_path
+    release_date
+    runtime
+    id
+    vote_count
+    vote_average
+    homepage
+    popularity
+    revenue
+    genres {
+      id
+      name
+    }
+    imdb_id
+    videos {
+      results {
+        key
+        site
+        id
+        type
+      }
+    }
+    credits {
+      cast {
+        character
+        name
+        id
+        cast_id
+      }
+    }
+`;
+
 export const MOVIE_DETAILS_QUERY = gql`
   query MovieDetailsQuery($movie_id: Int!) {
     movie(movie_id: $movie_id) {
-      original_title
-      overview
-      poster_path
-      release_date
-      runtime
-      id
-      vote_count
-      vote_average
-      homepage
-      popularity
-      genres {
-        id
-        name
-      }
-      imdb_id
+      ${sharedQuery}
     }
   }
 `;
 export const LATEST_MOVIE = gql`
   query LatestMovie {
     latest {
-      id
-      original_title
-      overview
-      poster_path
-      vote_count
-      vote_average
-      release_date
-      runtime
-      genres {
-        name
-      }
+      ${sharedQuery}
     }
   }
 `;
@@ -42,17 +53,7 @@ export const POPULAR_MOVIES = gql`
   query PopularMovies {
     popular {
       results {
-        id
-        original_title
-        overview
-        poster_path
-        vote_count
-        vote_average
-        release_date
-        runtime
-        genres {
-          name
-        }
+        ${sharedQuery}
       }
     }
   }
@@ -62,17 +63,7 @@ export const NOW_PLAYING = gql`
   query NowPlaying {
     now_playing {
       results {
-        id
-        original_title
-        poster_path
-        vote_count
-        vote_average
-        overview
-        release_date
-        runtime
-        genres {
-          name
-        }
+        ${sharedQuery}
       }
     }
   }
@@ -82,17 +73,7 @@ export const UPCOMING = gql`
   query Upcoming {
     upcoming {
       results {
-        id
-        original_title
-        overview
-        poster_path
-        vote_count
-        vote_average
-        release_date
-        runtime
-        genres {
-          name
-        }
+        ${sharedQuery}
       }
     }
   }
@@ -102,17 +83,7 @@ export const TOP_RATED = gql`
   query TopRated {
     top_rated {
       results {
-        id
-        original_title
-        overview
-        poster_path
-        vote_count
-        vote_average
-        release_date
-        runtime
-        genres {
-          name
-        }
+        ${sharedQuery}
       }
     }
   }

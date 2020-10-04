@@ -17,7 +17,8 @@ const Overlay = () => {
   // check outside click
   const closeModal = (e) => {
     // will be implemented
-    console.log(e.target);
+    // console.log(e.target);
+    return;
   };
 
   return (

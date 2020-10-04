@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Loading from '@/utils/Loading';
 import routes from '@/routes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useModal } from '@/context/app/ModalContext';
 
 const DefaultNavbar = React.lazy(() => import('./DefaultNavbar'));
 const DefaultSidebar = React.lazy(() => import('./DefaultSidebar'));
@@ -10,6 +11,8 @@ const Overlay = React.lazy(() => import('@/components/Overlay/Overlay'));
 
 function DefaultLayout() {
   const [displaySidebar, setDisplaySidebar] = useState(false);
+  const { state } = useModal();
+
   return (
     <>
       <React.Suspense fallback={Loading()}>
@@ -49,7 +52,7 @@ function DefaultLayout() {
           </button>
         </div>
       </section>
-      <Overlay />
+      {state.isOpen && <Overlay />}
     </>
   );
 }
