@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const graphqlHTTP = require('express-graphql');
 const cors = require('cors');
 const path = require('path');
+const redis = require('redis');
+const responseTime = require('response-time');
 
 // GraphQL Schema
 const schema = require('./schema');
@@ -10,9 +12,17 @@ const schema = require('./schema');
 // init express
 const app = express();
 
+// const redis
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const redisClient = redis.createClient(REDIS_PORT);
+redisClient.on('error', (error) => {
+  console.log('redis error', error);
+});
+
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(responseTime());
 
 // static
 app.use(express.static('public'));
@@ -25,7 +35,8 @@ app.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    graphiql: true,
+    graphiql: process.env.NODE_ENV == 'development' ? true : false,
+    context: { redis: redisClient },
   }),
 );
 

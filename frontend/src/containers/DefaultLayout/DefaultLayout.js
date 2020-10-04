@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Loading from '@/utils/Loading';
 import routes from '@/routes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useModal } from '@/context/app/ModalContext';
 
 const DefaultNavbar = React.lazy(() => import('./DefaultNavbar'));
 const DefaultSidebar = React.lazy(() => import('./DefaultSidebar'));
+const Overlay = React.lazy(() => import('@/components/Overlay/Overlay'));
 
 function DefaultLayout() {
+  const [displaySidebar, setDisplaySidebar] = useState(false);
+  const { state } = useModal();
+
   return (
     <>
       <React.Suspense fallback={Loading()}>
         <DefaultNavbar />
       </React.Suspense>
-      <section id="app-body-wrapper">
+      <section
+        id="app-body-wrapper"
+        className={`${displaySidebar ? '' : 'hide-sidebar'}`}
+      >
         <React.Suspense fallback={Loading()}>
           <DefaultSidebar />
         </React.Suspense>
@@ -35,8 +44,15 @@ function DefaultLayout() {
               </Switch>
             </React.Suspense>
           </div>
+          <button
+            className="app-sidebar-toggler rounded-circle py-2 px-3 shadow-lg"
+            onClick={() => setDisplaySidebar(!displaySidebar)}
+          >
+            <FontAwesomeIcon icon="bars" />
+          </button>
         </div>
       </section>
+      {state.isOpen && <Overlay />}
     </>
   );
 }

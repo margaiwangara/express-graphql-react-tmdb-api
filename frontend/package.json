@@ -21,11 +21,13 @@
     "react-helmet": "^6.1.0",
     "react-moment": "^0.9.7",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-spring": "^8.0.27",
+    "styled-components": "^5.2.0"
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build && mv build ../public",
+    "build": "craco build && cp -r build/* ../public",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

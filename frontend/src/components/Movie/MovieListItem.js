@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Moment from 'react-moment';
 import { POSTER_PATH, formatGenre, formatRuntime } from '@/utils';
+import { useModal } from '@/context/app/ModalContext';
+import { toggleModal } from '@/context/actions/modal';
+import { useMovie } from '@/context/app/MovieContext';
+import { getMovieDetails } from '@/context/actions/movie';
 
 function MovieListItem({ value }) {
   const [showDetails, setShowDetails] = useState('');
+  const { dispatch } = useModal();
+  const { dispatch: movieDispatch } = useMovie();
 
   const displayDetails = (id) => {
     setShowDetails(id);
@@ -14,13 +20,18 @@ function MovieListItem({ value }) {
     setShowDetails('');
   };
 
+  const movieOnClick = (e) => {
+    // populate state
+    movieDispatch(getMovieDetails(value));
+    dispatch(toggleModal());
+  };
+
+  // onMouseOver={() => displayDetails(value.id)}
+  // onMouseOut={hideDetails}
+
   return (
     <div className="col-lg-2 col-md-3 col-sm-6 col-xs-12 mb-3" key={value.id}>
-      <div
-        className="movie-box"
-        onMouseOver={() => displayDetails(value.id)}
-        onMouseOut={hideDetails}
-      >
+      <div className="movie-box" onClick={movieOnClick}>
         <div className="movie-poster-container shadow-lg">
           <img
             src={`${POSTER_PATH}/${value.poster_path}`}

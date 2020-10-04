@@ -8,13 +8,14 @@
   --primaryAlternativeColorShade: #ecc209;
   --blackColorShade: #223a44;
   --primaryAlternativeColorShadeLight: rgba(236, 194, 9, 0.25);
+  --sidebarWidth: 15.625rem;
 }
 
 body {
   font-family: 'Montserrat', sans-serif;
   width: 100%;
   height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 #app-wrapper {
@@ -56,6 +57,23 @@ body {
   position: relative;
 }
 
+/* toggler handler */
+#app-body-wrapper.hide-sidebar .app-sidebar {
+  width: 0;
+}
+
+#app-body-wrapper.hide-sidebar .app-body-content-wrapper {
+  padding-left: 0;
+}
+
+#app-body-wrapper.hide-sidebar .app-sidebar-toggler {
+  left: 20px;
+}
+
+.app-body-content-wrapper .container h3 {
+  margin-top: 20px;
+}
+
 /* sidebar */
 .app-sidebar {
   padding: 2rem 0;
@@ -64,10 +82,29 @@ body {
   position: absolute;
   left: 0;
   height: 100%;
-  transition: all 0.5s ease-in-out linear;
-  width: 15.625rem;
+  transition: all 0.5s ease-in-out;
+  width: var(--sidebarWidth);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  z-index: 400;
+}
+
+.app-sidebar-toggler {
+  color: var(--blackColor);
+  position: fixed;
+  background-color: var(--primaryAlternativeColor);
+  left: 225px;
+  top: 20px;
+  z-index: 500;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.app-sidebar-toggler:focus {
+  outline: none;
 }
 
 .app-sidebar-brand {
@@ -124,13 +161,14 @@ body {
 
 /* app-body-content-wrapper */
 .app-body-content-wrapper {
-  padding-left: 15.625rem;
+  padding-left: var(--sidebarWidth);
   padding-top: 3.5rem;
   color: var(--blackColorShade);
   height: 100%;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  transition: all 0.5s ease-in-out;
 }
 
 /* Home */
@@ -253,4 +291,56 @@ body {
   z-index: -1;
   border-radius: 8px;
   /* border: solid 2px var(--primaryAlternativeColor); */
+}
+
+.poster-details {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.poster-details p {
+  text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  /* app sidebar */
+  .app-sidebar {
+    width: 100%;
+  }
+
+  /* app wrapper */
+  .app-body-content-wrapper {
+    padding-left: 0;
+  }
+
+  .app-sidebar-toggler {
+    left: unset;
+    right: 25px;
+  }
+
+  .poster-box::before {
+    display: none;
+  }
+
+  .poster-details::after {
+    display: none;
+  }
+
+  .poster-box {
+    margin-top: 25px;
+  }
+
+  .poster-details {
+    align-items: center;
+  }
+
+  .poster-details h1 {
+    text-align: center;
+  }
+
+  .poster-details p {
+    text-align: center;
+  }
 }
