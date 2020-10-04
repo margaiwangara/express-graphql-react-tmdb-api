@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSpring, animated } from 'react-spring';
 
 const Overlay = () => {
+  const [showModal, setShowModal] = useState(true);
   return (
-    <OverlayContainer className="h-100 w-100">
+    <OverlayContainer
+      className="h-100 w-100"
+      style={{ display: showModal ? 'block' : 'none' }}
+    >
       <div className="row my-5">
         <div className="col-md-6 offset-md-3">
           <div className="app-modal w-100">
+            <button className="close-app-modal">
+              <FontAwesomeIcon icon="times" />
+            </button>
             <div className="video-area">
               <iframe
                 width="560"
@@ -83,7 +91,31 @@ const OverlayContainer = styled.div`
     box-shadow: 10px 10px 70px 20px rgba(0, 0, 0, 0.75);
     line-height: 1.5;
     border-radius: 10px;
-    overflow: hidden;
+
+    position: relative;
+
+    .close-app-modal {
+      background-color: var(--primaryAlternativeColor);
+      color: var(--blackColor);
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      height: 40px;
+      width: 40px;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: var(--blackColor);
+        color: var(--primaryAlternativeColor);
+      }
+    }
   }
 
   .video-area {
