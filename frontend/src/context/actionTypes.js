@@ -1,1 +1,2 @@
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+export const GET_MOVIE_DETAILS = 'GET_MOVIE_DETAILS';
