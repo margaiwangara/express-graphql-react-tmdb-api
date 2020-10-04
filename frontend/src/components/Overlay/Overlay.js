@@ -2,18 +2,36 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSpring, animated } from 'react-spring';
+import { useModal } from '@/context/app/ModalContext';
+import { toggleModal } from '@/context/actions/modal';
 
 const Overlay = () => {
-  const [showModal, setShowModal] = useState(true);
+  const { state, dispatch } = useModal();
+  const contentProps = useSpring({
+    opacity: state.isOpen ? 1 : 0,
+    marginTop: state.isOpen ? '3rem' : '-50rem',
+  });
+
+  // check outside click
+  const closeModal = (e) => {
+    // will be implemented
+    console.log(e.target);
+  };
+
   return (
     <OverlayContainer
       className="h-100 w-100"
-      style={{ display: showModal ? 'block' : 'none' }}
+      style={{ display: state.isOpen ? 'block' : 'none' }}
+      onClick={closeModal}
     >
-      <div className="row my-5">
+      <animated.div className="row mb-5" style={contentProps}>
         <div className="col-md-6 offset-md-3">
           <div className="app-modal w-100">
-            <button className="close-app-modal">
+            <button
+              className="close-app-modal"
+              type="button"
+              onClick={() => dispatch(toggleModal())}
+            >
               <FontAwesomeIcon icon="times" />
             </button>
             <div className="video-area">
@@ -21,9 +39,9 @@ const Overlay = () => {
                 width="560"
                 height="315"
                 src="https://www.youtube.com/embed/9YffrCViTVk"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
             </div>
             <div className="video-details p-3 row">
@@ -71,7 +89,7 @@ const Overlay = () => {
             </div>
           </div>
         </div>
-      </div>
+      </animated.div>
     </OverlayContainer>
   );
 };
@@ -91,7 +109,6 @@ const OverlayContainer = styled.div`
     box-shadow: 10px 10px 70px 20px rgba(0, 0, 0, 0.75);
     line-height: 1.5;
     border-radius: 10px;
-
     position: relative;
 
     .close-app-modal {
@@ -115,6 +132,10 @@ const OverlayContainer = styled.div`
         background-color: var(--blackColor);
         color: var(--primaryAlternativeColor);
       }
+
+      &:focus {
+        outline: none;
+      }
     }
   }
 
@@ -125,6 +146,7 @@ const OverlayContainer = styled.div`
     border-radius: 10px 10px 0 0;
     position: relative;
     padding-bottom: 56.25%;
+    overflow: hidden;
 
     iframe {
       position: absolute;

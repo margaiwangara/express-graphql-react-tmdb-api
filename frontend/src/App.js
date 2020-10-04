@@ -15,6 +15,7 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import Loading from './utils/Loading';
+import ContextStore from './context/store';
 
 // components
 const MainComponent = React.lazy(() => import('./containers/Main/Main'));
@@ -42,22 +43,24 @@ function App() {
   return (
     <Router>
       <ApolloProvider client={client}>
-        <Helmet>
-          <meta
-            name="description"
-            content="A platform to track and view movies"
-          />
-          <meta
-            name="keywords"
-            content="twentyfourseven, movies, latest, upcoming, new arrivals, 24/7"
-          />
-          <meta name="author" content="Margai Wangara" />
-        </Helmet>
-        <div id="app-wrapper">
-          <React.Suspense fallback={Loading()}>
-            <MainComponent />
-          </React.Suspense>
-        </div>
+        <ContextStore>
+          <Helmet>
+            <meta
+              name="description"
+              content="A platform to track and view movies"
+            />
+            <meta
+              name="keywords"
+              content="twentyfourseven, movies, latest, upcoming, new arrivals, 24/7"
+            />
+            <meta name="author" content="Margai Wangara" />
+          </Helmet>
+          <div id="app-wrapper">
+            <React.Suspense fallback={Loading()}>
+              <MainComponent />
+            </React.Suspense>
+          </div>
+        </ContextStore>
       </ApolloProvider>
     </Router>
   );

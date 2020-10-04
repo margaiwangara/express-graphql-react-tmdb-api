@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Moment from 'react-moment';
 import { POSTER_PATH, formatGenre, formatRuntime } from '@/utils';
+import { useModal } from '@/context/app/ModalContext';
+import { toggleModal } from '@/context/actions/modal';
 
 function MovieListItem({ value }) {
   const [showDetails, setShowDetails] = useState('');
+  const { dispatch } = useModal();
 
   const displayDetails = (id) => {
     setShowDetails(id);
@@ -19,6 +22,7 @@ function MovieListItem({ value }) {
       <div
         className="movie-box"
         onMouseOver={() => displayDetails(value.id)}
+        onClick={() => dispatch(toggleModal())}
         onMouseOut={hideDetails}
       >
         <div className="movie-poster-container shadow-lg">
