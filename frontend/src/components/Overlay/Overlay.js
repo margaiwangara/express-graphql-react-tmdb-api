@@ -92,7 +92,8 @@ const OverlayContainer = styled.div`
     padding-bottom: 56.25%;
     overflow: hidden;
 
-    iframe {
+    iframe,
+    img {
       position: absolute;
       top: 0;
       left: 0;

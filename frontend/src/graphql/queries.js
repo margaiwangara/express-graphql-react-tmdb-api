@@ -3,6 +3,7 @@ import { gql } from 'apollo-boost';
 export const sharedQuery = `
     original_title
     overview
+    backdrop_path
     poster_path
     release_date
     runtime
