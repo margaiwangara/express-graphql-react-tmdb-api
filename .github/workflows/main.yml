@@ -28,6 +28,7 @@ jobs:
 
       - name: Install React Dependencies and Build
         run: |
+          mkdir public
           cd frontend
           npm install
           npm run build --if-present
