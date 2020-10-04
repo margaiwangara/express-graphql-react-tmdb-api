@@ -28,7 +28,7 @@ const Overlay = () => {
       onClick={closeModal}
     >
       <animated.div className="row mb-5" style={contentProps}>
-        <div className="col-md-6 offset-md-3">
+        <div className="col-md-8 offset-md-2">
           <React.Suspense fallback={Loading()}>
             <MovieModal />
           </React.Suspense>

@@ -26,26 +26,26 @@ function Home() {
                 className="poster-box rounded w-100 h-100"
                 style={{ position: 'relative' }}
               >
-                {latest.poster_path ? (
-                  <div className="image-box rounded shadow-lg">
-                    <img
-                      src={`${POSTER_PATH}/${latest.poster_path}`}
-                      alt="movie-poster"
-                      className="h-100 w-100"
-                    />
-                  </div>
+                <div
+                  className="h-100 d-flex align-items-center justify-content-center shadow-lg"
+                  style={noPosterStyling}
+                >
+                  <img
+                    src={logoTransparent}
+                    alt="app-logo"
+                    style={{ width: '150px', height: '150px' }}
+                  />
+                </div>
+                {/* {latest.poster_path ? (
+                  // <div className="image-box rounded shadow-lg">
+                  //   <img
+                  //     src={`${POSTER_PATH}/${latest.poster_path}`}
+                  //     alt="movie-poster"
+                  //     className="h-100 w-100"
+                  //   />
+                  // </div>
                 ) : (
-                  <div
-                    className="h-100 d-flex align-items-center justify-content-center shadow-lg"
-                    style={noPosterStyling}
-                  >
-                    <img
-                      src={logoTransparent}
-                      alt="app-logo"
-                      style={{ width: '150px', height: '150px' }}
-                    />
-                  </div>
-                )}
+                )} */}
               </div>
             </div>
             <div className="col-md-8 col-sm-12">
