@@ -12,9 +12,17 @@ const schema = require('./schema');
 // init express
 const app = express();
 
+// dotenv config
+dotenv.config({ path: './config/config.env' });
+
 // const redis
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
-const redisClient = redis.createClient(REDIS_PORT);
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
+});
+
 redisClient.on('error', (error) => {
   console.log('redis error', error);
 });
@@ -26,9 +34,6 @@ app.use(responseTime());
 
 // static
 app.use(express.static('public'));
-
-// dotenv config
-dotenv.config({ path: './config/config.env' });
 
 // route
 app.use(
