@@ -9,8 +9,9 @@ function MovieList({ data }) {
         if (!value.adult) {
           return <MovieListItem value={value} key={value.id} />;
         }
+        return null;
       })
-    : '';
+    : [];
 
   return (
     <div className="row mt-5">
