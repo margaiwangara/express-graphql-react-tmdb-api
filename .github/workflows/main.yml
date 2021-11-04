@@ -27,9 +27,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install server dependencies
-        run: yarn install --prefer-offline
-
       - name: Install client dependencies
         run: |
           cd frontend
@@ -37,15 +34,14 @@ jobs:
 
       - name: 🔨 Build client project
         run: |
+          mkdir public
           cd frontend
           npm run build --if-present
         env:
           CI: false
 
       - name: List output files
-        run: |
-          cd frontend
-          find build/ -print
+        run: find public/ -print
 
       - name: Store build files as artifacts
         uses: actions/upload-artifact@v2
@@ -63,28 +59,18 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Create build directory in workspace
-        run: mkdir build
+      - name: Create public directory in workspace
+        run: mkdir public
 
       - name: Fetch build from artifact
         uses: actions/download-artifact@v2
         with:
           name: build
-          path: build
+          path: public
 
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: build
-
-      - uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: 'build/*'
-          target: ${{ secrets.CLIENT_TARGET_DIR }}
-          strip_components: 1
-          overwrite: true
+        working-directory: public
 
       - uses: appleboy/scp-action@master
         with:
