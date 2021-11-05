@@ -16,7 +16,7 @@ function Home() {
 
   const { latest } = data;
 
-  if (latest.adult) {
+  if (!latest || latest.adult) {
     return <h3>There is no data to display</h3>;
   }
 

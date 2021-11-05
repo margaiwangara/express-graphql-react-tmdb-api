@@ -36,7 +36,7 @@ const client = new ApolloClient({
   uri:
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:5000/graphql'
-      : 'https://twentyfourseven.margaiwangara.me/graphql',
+      : 'https://sinema.margaiwangara.me/graphql',
 });
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
             />
             <meta
               name="keywords"
-              content="twentyfourseven, movies, latest, upcoming, new arrivals, 24/7"
+              content="sinema, movies, latest, upcoming, new arrivals, 24/7"
             />
             <meta name="author" content="Margai Wangara" />
           </Helmet>
